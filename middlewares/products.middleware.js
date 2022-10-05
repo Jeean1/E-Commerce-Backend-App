@@ -8,11 +8,12 @@ const { ProductImgs } = require("../models/productImg.model");
 
 const productExists = catchAsync(async (req, res, next) => {
   const { id } = req.params;
+  const { sessionUser } = req;
 
   const product = await Product.findOne({
-     where: { id },
-     include: {model: ProductImgs}
-     });
+    where: { id, userId: sessionUser.id },
+    include: { model: ProductImgs },
+  });
 
   if (!product) {
     return next(new AppError("Product id not found", 404));

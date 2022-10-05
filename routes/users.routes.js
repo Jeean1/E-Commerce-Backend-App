@@ -33,6 +33,8 @@ usersRouter.post("/login", login);
 // Protecting below endpoints
 usersRouter.use(protectSession);
 
+usersRouter.get("/", getAllUsers)
+
 usersRouter.get("/me", getAllProductsCreated);
 
 usersRouter.get("/orders", getPurchasesMade);

@@ -45,8 +45,6 @@ const getProductByID = catchAsync(async (req, res, next) => {
 const getCategoriesActive = catchAsync(async (req, res, next) => {
   const category = await Category.findAll();
 
-  console.log(Category.findAll);
-
   res.status(200).json({
     status: "success",
     data: { category },

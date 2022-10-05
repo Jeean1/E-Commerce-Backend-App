@@ -38,6 +38,22 @@ const MulterImgLimit = () => {
   return new AppError("You can only upload 2 images", 400);
 };
 
+const notProductsInCar = () => {
+  return new AppError("Products Not Found", 404);
+};
+
+const noTokenInReq = () => {
+  return new AppError("Not session exist", 404);
+};
+
+const notOwner = () => {
+  return new AppError("You're not owner on this data", 404);
+};
+
+const noQuantity = () => {
+  return new AppError("no enougth quantity item", 404);
+};
+
 const globalErrorHandler = (error, req, res, next) => {
   // Set default values for original error obj
   error.statusCode = error.statusCode || 500;
@@ -54,6 +70,14 @@ const globalErrorHandler = (error, req, res, next) => {
     else if (error.name === "SequelizeUniqueConstraintError")
       err = dbUniqueConstraintError();
     else if (error.code === "LIMIT_UNEXPECTED_FILE") err = MulterImgLimit();
+    else if (error.message === "Products Not Found") err = notProductsInCar();
+    else if (error.message === "The token was invalid") err = noTokenInReq();
+    else if (error.message === "You are not the owner of this account.")
+      err = notOwner();
+    else if (error.message === "Product id not found") err = notProductsInCar();
+    else if (error.message === `${error.message}`) err = noQuantity();
+
+    console.log(error);
     sendErrorProd(err, req, res);
   }
 };
