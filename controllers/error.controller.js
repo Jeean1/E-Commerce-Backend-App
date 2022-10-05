@@ -54,6 +54,28 @@ const noQuantity = () => {
   return new AppError("no enougth quantity item", 404);
 };
 
+const productExistInCart = () => {
+  new AppError("Product is already exist in cart", 400);
+};
+
+const shoppingCartNoExist = () => {
+  new AppError("ShoppingCart not found", 404);
+};
+
+const productNoExistInCart = () => {
+  new AppError("product in shopping cart not found", 404);
+};
+
+const productCartOrCarExist = () => {
+  new AppError("product in cart not found", 404);
+};
+
+const productRemoved = () => {
+  new AppError("Product is already removed", 400);
+};
+
+const erroVar6 = () => {};
+
 const globalErrorHandler = (error, req, res, next) => {
   // Set default values for original error obj
   error.statusCode = error.statusCode || 500;
@@ -76,8 +98,17 @@ const globalErrorHandler = (error, req, res, next) => {
       err = notOwner();
     else if (error.message === "Product id not found") err = notProductsInCar();
     else if (error.message === `${error.message}`) err = noQuantity();
+    else if (error.message === "Product is already exist in cart")
+      err = productExistInCart();
+    else if (error.message === "ShoppingCart not found")
+      err = shoppingCartNoExist();
+    else if (error.message === "product in shopping cart not found")
+      err = productNoExistInCart();
+    else if (error.message === "product in cart not found")
+      err = productCartOrCarExist();
+    else if (error.message === "Product is already removed")
+      err = productRemoved();
 
-    console.log(error);
     sendErrorProd(err, req, res);
   }
 };
