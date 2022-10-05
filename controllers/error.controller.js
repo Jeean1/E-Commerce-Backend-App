@@ -86,6 +86,12 @@ const globalErrorHandler = (error, req, res, next) => {
   } else if (process.env.NODE_ENV === "production") {
     let err = { ...error };
 
+    //error specific quantity
+    const compareWords = ["Only", "avalible"];
+    const errorArray = error.message.split(" ");
+
+    console.log(errorArray);
+
     if (error.name === "TokenExpiredError") err = tokenExpiredError();
     else if (error.name === "JsonWebTokenError")
       err = tokenInvalidSignatureError();
@@ -97,7 +103,7 @@ const globalErrorHandler = (error, req, res, next) => {
     else if (error.message === "You are not the owner of this account.")
       err = notOwner();
     else if (error.message === "Product id not found") err = notProductsInCar();
-    else if (error.message === `${error.message}`) err = noQuantity();
+    else if (errorArray[1] === compareWords[1]) err = noQuantity();
     else if (error.message === "Product is already exist in cart")
       err = productExistInCart();
     else if (error.message === "ShoppingCart not found")
