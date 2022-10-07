@@ -8,10 +8,9 @@ const { ProductImgs } = require("../models/productImg.model");
 
 const productExists = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const { sessionUser } = req;
 
   const product = await Product.findOne({
-    where: { id, userId: sessionUser.id },
+    where: { id },
     include: { model: ProductImgs },
   });
 

@@ -14,8 +14,6 @@ const getUserCart = catchAsync(async (req, res, next) => {
     include: { model: ProductsInCart },
   });
 
-  console.log(res);
-
   res.status(200).json({
     status: "success",
     message: { userCart },

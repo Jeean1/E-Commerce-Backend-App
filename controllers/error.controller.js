@@ -90,8 +90,6 @@ const globalErrorHandler = (error, req, res, next) => {
     const compareWords = ["Only", "avalible"];
     const errorArray = error.message.split(" ");
 
-    console.log(errorArray);
-
     if (error.name === "TokenExpiredError") err = tokenExpiredError();
     else if (error.name === "JsonWebTokenError")
       err = tokenInvalidSignatureError();
